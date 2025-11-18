@@ -11,12 +11,12 @@ app.use(cors({
 
 
 app.use(express.json({
-    limit : "16mb",
+    limit : "50mb",
 })); // Middleware to parse JSON request bodies
 
 app.use(express.urlencoded({
     extended : true,
-    limit : "16mb",
+    limit : "50mb",
 })); // Middleware to parse URL-encoded request bodies
 
 app.use(express.static("public")); // Serve static files from the "public" directory

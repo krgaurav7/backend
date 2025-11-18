@@ -22,16 +22,14 @@ const uploadonCloudinary = async (localfilePath) => {
             resource_type: "image", 
         });
 
-        console.log("Cloudinary response:", response);
-
+        //console.log("Cloudinary response:", response);
         // delete local file AFTER upload
         if (fs.existsSync(localfilePath)) {
             fs.unlinkSync(localfilePath);
         }
-
         return response;
-
-    } catch (error) {
+    } 
+    catch (error) {
         console.log("Cloudinary Upload Failed:", error.message);
 
         if (fs.existsSync(localfilePath)) {
