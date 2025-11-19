@@ -1,8 +1,8 @@
-import { v2 as cloudinary } from 'cloudinary'
-import dotenv from 'dotenv'
-dotenv.config() // Load environment variables from .env file
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
+dotenv.config();
 
-import fs from 'fs';
+import fs from 'fs/promises'; // use promises API
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,35 +10,26 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-
 const uploadonCloudinary = async (localfilePath) => {
-    try {
-        if (!localfilePath) {
-            console.log("No path specified");
-            return null;
-        }
+    if (!localfilePath) {
+        console.log("No path specified");
+        return null;
+    }
 
+    try {
         const response = await cloudinary.uploader.upload(localfilePath, {
             resource_type: "image", 
         });
 
-        //console.log("Cloudinary response:", response);
-        // delete local file AFTER upload
-        if (fs.existsSync(localfilePath)) {
-            fs.unlinkSync(localfilePath);
-        }
+        // delete local file after upload
+        await fs.unlinkSync(localfilePath).catch(() => {});
         return response;
-    } 
-    catch (error) {
+    } catch (error) {
         console.log("Cloudinary Upload Failed:", error.message);
 
-        if (fs.existsSync(localfilePath)) {
-            fs.unlinkSync(localfilePath);
-        }
-
+        await fs.unlink(localfilePath).catch(() => {});
         return null;
     }
 };
-
 
 export { uploadonCloudinary };
