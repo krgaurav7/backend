@@ -7,12 +7,12 @@ dotenv.config();
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
   
-  console.log(req.cookies.accessToken);
+  //console.log(req.cookies.accessToken);
 
   const token =
     await req.cookies?.accessToken || 
     req.header("Authorization")?.replace("Bearer ","");
-  console.log(token);
+  //console.log(token);
 
   if (!token) {
     throw new ApiError("Unauthorized Request", 401);
