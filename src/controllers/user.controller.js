@@ -11,11 +11,14 @@ const generateAccessanndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId)
 
-    const AccessToken = user.generateAccessToken();
-    const RefreshToken = user.generateRefreshToken();
+    const AccessToken = await user.generateAccessToken();
+    const RefreshToken = await user.generateRefreshToken();
+
+    console.log(AccessToken);
+    console.log(RefreshToken);
 
     user.refreshTokens = RefreshToken;
-    user.save({validateBeforeSave : false}); // svae user without valoidation
+    await user.save({validateBeforeSave : false}); // svae user without valoidation
 
     return {AccessToken , RefreshToken}; // return both generated token
 
@@ -123,7 +126,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   if(!password){
-    throw new ApiError("Password is must required" , 4001);
+    throw new ApiError("Password is must required" , 401);
   }
 
   const user = await User.findOne({
@@ -166,6 +169,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler( async (req, res) => {
+
   await User.findByIdAndUpdate(
     req.user._id,{
       $set: {
