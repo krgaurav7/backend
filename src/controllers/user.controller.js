@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"
 
 // making a default function to generate access and refresh token 
 const generateAccessanndRefreshToken = async (userId) => {
-
+  
   try {
     const user = await User.findById(userId)
 
