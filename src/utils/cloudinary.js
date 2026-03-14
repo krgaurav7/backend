@@ -21,8 +21,10 @@ const uploadonCloudinary = async (localfilePath) => {
             resource_type: "image", 
         });
 
-        // delete local file after upload
-        await fs.unlinkSync(localfilePath).catch(() => {});
+        try {
+            fs.unlinkSync(localfilePath); //delete the file at localfilepath if exist
+            } catch {}
+
         return response;
     } catch (error) {
         console.log("Cloudinary Upload Failed:", error.message);
