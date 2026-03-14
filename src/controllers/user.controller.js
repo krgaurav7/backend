@@ -5,7 +5,6 @@ import { uploadonCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
-import { use } from "react";
 
 
 // making a default function to generate access and refresh token 
@@ -21,7 +20,7 @@ const generateAccessanndRefreshToken = async (userId) => {
     //console.log(RefreshToken);
 
     user.refreshTokens = RefreshToken;
-    await user.save({validateBeforeSave : false}); // svae user without valoidation
+    await user.save({validateBeforeSave : false}); // save user without valoidation
 
     return {AccessToken , RefreshToken}; // return both generated token
 
