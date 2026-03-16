@@ -308,8 +308,10 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Error while uploading")
   }
 
-  const user = findByIdAndUpdate(
-    res.user?._id,
+  console.log(req.user);
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
     {
       $set : {
         avatar : avatar.url
@@ -467,7 +469,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
   return res
   .status(200)
   .json(
-    new ApiResponse (200, user[0].watchHistory, "Watch History fetch successfuly")
+    new ApiResponse (200, "Watch History fetch successfuly", user[0].watchHistory)
   )
 })
 
