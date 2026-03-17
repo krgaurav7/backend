@@ -197,7 +197,7 @@ const refreshAccessToken = asyncHandler(async (req, res)=> {
   // i have refresh token in db
   // we need to access refresh token from cookies
 
-  const incomingRefreshToken = await req.cookie.refreshTokens||req.body.refreshTokens;
+  const incomingRefreshToken = await req.cookies.refreshToken||req.body.refreshTokens;
 
     if(!incomingRefreshToken){
       throw new ApiError(401, "Unable to acrress the Refresh Token");
@@ -308,8 +308,6 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Error while uploading")
   }
 
-  console.log(req.user);
-
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
@@ -328,19 +326,20 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 const updateUserCoverimg = asyncHandler(async (req, res) => {
 
   const coverimageLocalPath = req.file?.path
+  console.log(req.file)
 
   if(!coverimageLocalPath){
-    throw new ApiError(400, "Cover file is missing")
+    throw new ApiError("Cover file is missing", 400)
   }
 
   const coverimage = await uploadonCloudinary(coverimageLocalPath)
 
   if(!coverimage.url){
-    throw new ApiError(400, "Error while uploading Cover Image")
+    throw new ApiError("Error while uploading Cover Image", 400)
   }
 
-  const user = findByIdAndUpdate(
-    res.user?._id,
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
     {
       $set : {
         coverImage : coverimage.url
