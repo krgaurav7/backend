@@ -11,12 +11,12 @@ import { getAllVideos,
 const router = Router();
 
 router.route("/getAllVideos").get( getAllVideos);
-router.route("/getVideobyid").get(verifyJWT , getVideoById);
-router.route("/delete-Video/:videoId").delete(verifyJWT, deleteVideo);
+router.route("/getVideobyid/:videoId").get(verifyJWT , getVideoById);
+router.route("/:videoId").delete(verifyJWT, deleteVideo);
 router.route("/update-video/:videoId").patch(verifyJWT,upload.single("thumbnail"), updateVideo);
-router.route("/change-video-status").patch(verifyJWT, togglePublishStatus);
+router.route("/change-video-status/:videoId").patch(verifyJWT, togglePublishStatus);
 router.route("/publish_video").post(verifyJWT, upload.fields([
-    {name : thumbnail} , {name : videoFile}
+    {name : "thumbnail", maxCount:1} , {name : "videoFile", maxCount:1}
 ]), publishAVideo);
 
 export default router;
