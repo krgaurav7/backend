@@ -25,8 +25,14 @@ app.use(cookieParser()); // Middleware to parse cookies to the request object
 
 // Define a simple health check route
 import userRouter from "./routes/user.routes.js"
+import videoRouter from "./routes/video.routes.js"
+import tweetRouter from "./routes/tweet.routes.js"
+import commentRouter from "./routes/comment.routes.js"
 
 //route declaration
 app.use("/api/v1/users", userRouter) // it will pass to /users route
+app.use("/api/v1/video", videoRouter)
+app.use("/api/v1/tweet", tweetRouter)
+app.use("/api/v1/tweet", commentRouter)
 
 export { app }; 
