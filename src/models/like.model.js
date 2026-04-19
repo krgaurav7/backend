@@ -4,7 +4,7 @@ const likeSchema = new Schema(
     {
         comment : {
             type : Schema.Types.ObjectId,
-            required : true,
+            ref: "Comment"
         },
         createdAt : {
             type : Date,
@@ -20,7 +20,7 @@ const likeSchema = new Schema(
         },
         likedBy : {
             type : Schema.Types.ObjectId,
-            ref : "user",
+            ref : "User",
             required : true
         },
         tweet : {
