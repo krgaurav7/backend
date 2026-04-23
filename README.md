@@ -104,14 +104,7 @@ http://localhost:5000
 - Login → Access Token + Refresh Token  
 - Access token used for API calls  
 - Refresh token used to regenerate access token  
-- Tokens stored securely (HTTP-only cookies)  
-
----
-
-## 🚀 Deployment
-
-- Render  
-- Railway  
+- Tokens stored securely (HTTP-only cookies)   
 
 ---
 
